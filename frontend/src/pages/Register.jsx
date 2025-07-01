@@ -1,99 +1,114 @@
+import { useRef, useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const confirmPasswordRef = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // handle form submit code
+    console.log("Name:", nameRef.current.value);
+    console.log("Email:", emailRef.current.value);
+    console.log("Password:", passwordRef.current.value);
+    console.log("Confirm Password:", confirmPasswordRef.current.value);
   };
-  return (
-    <section className="w-full container mx-auto px-2">
-      <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
-        <p>Welcome to Binkeyit</p>
 
-        <form className="grid gap-4 mt-6" onSubmit={handleSubmit}>
+  return (
+    <section className="h-full flex items-center justify-center bg-gray-50 px-4">
+      <div className="bg-white w-full max-w-sm rounded-2xl shadow-xl p-8">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Welcome to Binkeyit
+        </h2>
+
+        <form onSubmit={handleSubmit} className="grid gap-4">
+          {/* Name */}
           <div className="grid gap-1">
-            <label htmlFor="name">Name :</label>
+            <label htmlFor="name" className="text-sm font-medium text-gray-700">
+              Name
+            </label>
             <input
+              ref={nameRef}
               type="text"
               id="name"
-              autoFocus
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
               name="name"
-              // value={data.name}
-              // onChange={handleChange}
               placeholder="Enter your name"
+              className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition"
+              required
             />
           </div>
+
+          {/* Email */}
           <div className="grid gap-1">
-            <label htmlFor="email">Email :</label>
+            <label htmlFor="email" className="text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
+              ref={emailRef}
               type="email"
               id="email"
-              className="bg-blue-50 p-2 border rounded outline-none focus:border-primary-200"
               name="email"
-              // value={data.email}
-              // onChange={handleChange}
               placeholder="Enter your email"
+              className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition"
+              required
             />
           </div>
+
+          {/* Password */}
           <div className="grid gap-1">
-            <label htmlFor="password">Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
+            <label htmlFor="password" className="text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div className="flex items-center rounded-lg border border-gray-300 bg-gray-100 px-3 focus-within:ring-2 focus-within:ring-primary focus-within:bg-white transition">
               <input
-                // type={showPassword ? "text" : "password"}
+                ref={passwordRef}
+                type={showPassword ? "text" : "password"}
                 id="password"
-                className="w-full outline-none"
                 name="password"
-                // value={data.password}
-                // onChange={handleChange}
-                placeholder="Enter your password"
+                placeholder="••••••••"
+                className="w-full py-3 bg-transparent outline-none"
+                required
               />
               <div
-                // onClick={() => setShowPassword((preve) => !preve)}
-                className="cursor-pointer"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="text-gray-500 cursor-pointer ml-2"
               >
-                {/* {showPassword ? <FaRegEye /> : <FaRegEyeSlash />} */}
-              </div>
-            </div>
-          </div>
-          <div className="grid gap-1">
-            <label htmlFor="confirmPassword">Confirm Password :</label>
-            <div className="bg-blue-50 p-2 border rounded flex items-center focus-within:border-primary-200">
-              <input
-                // type={showConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                className="w-full outline-none"
-                name="confirmPassword"
-                // value={data.confirmPassword}
-                // onChange={handleChange}
-                placeholder="Enter your confirm password"
-              />
-              <div
-                // onClick={() => setShowConfirmPassword((preve) => !preve)}
-                className="cursor-pointer"
-              >
-                {/* {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />} */}
+                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
               </div>
             </div>
           </div>
 
+          {/* Confirm Password */}
+          <div className="grid gap-1">
+            <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+              Confirm Password
+            </label>
+            <input
+              ref={confirmPasswordRef}
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Re-enter your password"
+              className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition"
+              required
+            />
+          </div>
+
+          {/* Submit */}
           <button
-            // disabled={!valideValue}
-            // className={` ${
-            //   valideValue ? "bg-green-800 hover:bg-green-700" : "bg-gray-500"
-            // }    text-white py-2 rounded font-semibold my-3 tracking-wide`}
-            className="bg-green-800 hover:bg-green-700 text-white py-2 rounded font-semibold my-3 tracking-wide"
+            type="submit"
+            className="w-full bg-[#00b04d] hover:bg-[#019945] text-white py-3 rounded-lg font-semibold transition shadow-md"
           >
             Register
           </button>
         </form>
 
-        <p>
-          Already have account ?{" "}
-          <Link
-            to={"/login"}
-            className="font-semibold text-green-700 hover:text-green-800"
-          >
+        <p className="text-sm text-center text-gray-600 mt-5">
+          Already have an account?{" "}
+          <Link to="/login" className="text-[#00b04d] font-medium hover:underline">
             Login
           </Link>
         </p>
