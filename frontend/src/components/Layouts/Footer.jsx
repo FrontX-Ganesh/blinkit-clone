@@ -1,5 +1,6 @@
 import { FaFacebook, FaInstagram, FaLinkedin, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import { IoMailSharp } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -35,12 +36,11 @@ const Footer = () => {
             <div className="flex items-center gap-4">
               <span className="text-purple-300 font-medium">Follow us:</span>
               <div className="flex gap-3">
-                <a 
-                  href="#" 
+                <Link  
                   className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
                 >
                   <FaFacebook className="w-5 h-5 text-purple-200 group-hover:text-white transition-colors" />
-                </a>
+                </Link>
                 <a 
                   href="#" 
                   className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
@@ -96,26 +96,6 @@ const Footer = () => {
                 </div>
                 <span className="text-purple-200">123 Commerce Street<br />New York, NY 10001</span>
               </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Newsletter signup */}
-        <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-              <h4 className="text-xl font-semibold text-white mb-2">Stay Updated</h4>
-              <p className="text-purple-200">Subscribe to get special offers and updates</p>
-            </div>
-            <div className="flex gap-2 w-full md:w-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="flex-1 md:w-64 px-4 py-3 rounded-lg bg-white/20 backdrop-blur-sm border border-white/30 text-white placeholder-purple-300 focus:outline-none focus:border-pink-400 focus:bg-white/30 transition-all"
-              />
-              <button className="px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-300 hover:scale-105 shadow-lg">
-                Subscribe
-              </button>
             </div>
           </div>
         </div>

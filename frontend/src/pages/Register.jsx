@@ -1,119 +1,273 @@
 import { useRef, useState } from "react";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import {
+  LuEye,
+  LuEyeOff,
+  LuUser,
+  LuMail,
+  LuLock,
+  LuShield,
+} from "react-icons/lu";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [focusedField, setFocusedField] = useState("");
   const nameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     console.log("Name:", nameRef.current.value);
     console.log("Email:", emailRef.current.value);
     console.log("Password:", passwordRef.current.value);
     console.log("Confirm Password:", confirmPasswordRef.current.value);
+    setIsLoading(false);
   };
 
   return (
-    <section className="h-full flex items-center justify-center bg-gray-50 px-4">
-      <div className="bg-white w-full max-w-sm rounded-2xl shadow-xl p-8">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Welcome to Binkeyit
-        </h2>
+    <div className="h-screen py-10 flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 relative overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div
+          className="absolute bottom-1/4 -right-20 w-96 h-96 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"
+          style={{ animationDelay: "2s" }}
+        ></div>
 
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          {/* Name */}
-          <div className="grid gap-1">
-            <label htmlFor="name" className="text-sm font-medium text-gray-700">
-              Name
+        <div
+          className="absolute top-20 left-20 w-2 h-2 bg-white/20 rounded-full animate-bounce"
+          style={{ animationDelay: "0s" }}
+        ></div>
+        <div
+          className="absolute top-40 right-40 w-1 h-1 bg-purple-300/40 rounded-full animate-bounce"
+          style={{ animationDelay: "1s" }}
+        ></div>
+        <div
+          className="absolute bottom-40 left-40 w-1.5 h-1.5 bg-blue-300/30 rounded-full animate-bounce"
+          style={{ animationDelay: "2s" }}
+        ></div>
+      </div>
+
+      <div className="relative bg-white/10 backdrop-blur-2xl w-full max-w-md rounded-3xl shadow-2xl border border-white/20 p-8 transform hover:scale-[1.02] transition-all duration-500 hover:shadow-purple-500/25">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-2xl mb-6 shadow-xl animate-pulse">
+            <LuUser className="text-white text-xl" />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
+          <p className="text-white/70">Join us to start your journey</p>
+        </div>
+
+        <div className="space-y-6">
+
+          <div className="space-y-2">
+            <label
+              htmlFor="name"
+              className="text-sm font-medium text-white/90 flex items-center gap-2"
+            >
+              <LuUser className="text-xs text-purple-400 w-4 h-4" />
+              Full Name
             </label>
-            <input
-              ref={nameRef}
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Enter your name"
-              className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition"
-              required
-            />
+            <div className="relative group">
+              <input
+                ref={nameRef}
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                onFocus={() => setFocusedField("name")}
+                onBlur={() => setFocusedField("")}
+                className="w-full p-4 pl-12 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-sm text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all duration-300 hover:bg-white/10"
+                required
+              />
+              <LuUser
+                className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-all duration-300 w-4 h-4 ${
+                  focusedField === "name"
+                    ? "text-purple-400 scale-110"
+                    : "text-white/40"
+                }`}
+              />
+              <div
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-300 pointer-events-none ${
+                  focusedField === "name" ? "opacity-100" : ""
+                }`}
+              ></div>
+            </div>
           </div>
 
-          {/* Email */}
-          <div className="grid gap-1">
-            <label htmlFor="email" className="text-sm font-medium text-gray-700">
-              Email
+          <div className="space-y-2">
+            <label
+              htmlFor="email"
+              className="text-sm font-medium text-white/90 flex items-center gap-2"
+            >
+              <LuMail className="text-xs text-purple-400 w-4 h-4" />
+              Email Address
             </label>
-            <input
-              ref={emailRef}
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Enter your email"
-              className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition"
-              required
-            />
+            <div className="relative group">
+              <input
+                ref={emailRef}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                onFocus={() => setFocusedField("email")}
+                onBlur={() => setFocusedField("")}
+                className="w-full p-4 pl-12 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-sm text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all duration-300 hover:bg-white/10"
+                required
+              />
+              <LuMail
+                className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-all duration-300 w-4 h-4 ${
+                  focusedField === "email"
+                    ? "text-purple-400 scale-110"
+                    : "text-white/40"
+                }`}
+              />
+              <div
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-300 pointer-events-none ${
+                  focusedField === "email" ? "opacity-100" : ""
+                }`}
+              ></div>
+            </div>
           </div>
 
-          {/* Password */}
-          <div className="grid gap-1">
-            <label htmlFor="password" className="text-sm font-medium text-gray-700">
+          <div className="space-y-2">
+            <label
+              htmlFor="password"
+              className="text-sm font-medium text-white/90 flex items-center gap-2"
+            >
+              <LuLock className="text-xs text-purple-400 w-4 h-4" />
               Password
             </label>
-            <div className="flex items-center rounded-lg border border-gray-300 bg-gray-100 px-3 focus-within:ring-2 focus-within:ring-primary focus-within:bg-white transition">
+            <div className="relative group">
               <input
                 ref={passwordRef}
                 type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 placeholder="••••••••"
-                className="w-full py-3 bg-transparent outline-none"
+                onFocus={() => setFocusedField("password")}
+                onBlur={() => setFocusedField("")}
+                className="w-full p-4 pl-12 pr-12 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-sm text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all duration-300 hover:bg-white/10"
                 required
               />
-              <div
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="text-gray-500 cursor-pointer ml-2"
+              <LuLock
+                className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-all duration-300 w-4 h-4 ${
+                  focusedField === "password"
+                    ? "text-purple-400 scale-110"
+                    : "text-white/40"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-purple-400 transition-all duration-200 hover:scale-110"
               >
-                {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
-              </div>
+                {showPassword ? (
+                  <LuEye className="w-4 h-4" />
+                ) : (
+                  <LuEyeOff className="w-4 h-4" />
+                )}
+              </button>
+              <div
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-300 pointer-events-none ${
+                  focusedField === "password" ? "opacity-100" : ""
+                }`}
+              ></div>
             </div>
           </div>
 
-          {/* Confirm Password */}
-          <div className="grid gap-1">
-            <label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+          <div className="space-y-2">
+            <label
+              htmlFor="confirmPassword"
+              className="text-sm font-medium text-white/90 flex items-center gap-2"
+            >
+              <LuShield className="text-xs text-purple-400 w-4 h-4" />
               Confirm Password
             </label>
-            <input
-              ref={confirmPasswordRef}
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Re-enter your password"
-              className="w-full p-3 rounded-lg border border-gray-300 bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary transition"
-              required
-            />
+            <div className="relative group">
+              <input
+                ref={confirmPasswordRef}
+                type={showConfirmPassword ? "text" : "password"}
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Re-enter your password"
+                onFocus={() => setFocusedField("confirmPassword")}
+                onBlur={() => setFocusedField("")}
+                className="w-full p-4 pl-12 pr-12 rounded-2xl border border-white/20 bg-white/5 backdrop-blur-sm text-white placeholder-white/50 focus:outline-none focus:border-purple-400 focus:bg-white/10 transition-all duration-300 hover:bg-white/10"
+                required
+              />
+              <LuShield
+                className={`absolute left-4 top-1/2 transform -translate-y-1/2 transition-all duration-300 w-4 h-4 ${
+                  focusedField === "confirmPassword"
+                    ? "text-purple-400 scale-110"
+                    : "text-white/40"
+                }`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-purple-400 transition-all duration-200 hover:scale-110"
+              >
+                {showConfirmPassword ? (
+                  <LuEye className="w-4 h-4" />
+                ) : (
+                  <LuEyeOff className="w-4 h-4" />
+                )}
+              </button>
+              <div
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-300 pointer-events-none ${
+                  focusedField === "confirmPassword" ? "opacity-100" : ""
+                }`}
+              ></div>
+            </div>
           </div>
 
-          {/* Submit */}
           <button
+            onClick={handleSubmit}
             type="submit"
-            className="w-full bg-[#00b04d] hover:bg-[#019945] text-white py-3 rounded-lg font-semibold transition shadow-md"
+            disabled={isLoading}
+            className="w-full bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 disabled:from-gray-600 disabled:to-gray-700 text-white py-4 rounded-2xl font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-1 disabled:hover:transform-none disabled:cursor-not-allowed flex items-center justify-center gap-3 text-base relative overflow-hidden group"
           >
-            Register
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {isLoading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                <span>Creating Account...</span>
+              </>
+            ) : (
+              <>
+                <span>Create Account</span>
+                <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+              </>
+            )}
           </button>
-        </form>
+        </div>
 
-        <p className="text-sm text-center text-gray-600 mt-5">
-          Already have an account?{" "}
-          <Link to="/login" className="text-[#00b04d] font-medium hover:underline">
-            Login
-          </Link>
-        </p>
+        <div className="text-center mt-8 pt-6 border-t border-white/10">
+          <p className="text-sm text-white/70">
+            Already have an account?{" "}
+            <a
+              href="/login"
+              className="text-purple-300 font-semibold hover:text-purple-100 transition-colors duration-200 hover:underline"
+            >
+              Sign In
+            </a>
+          </p>
+        </div>
+
+        <div className="absolute -top-2 -right-2 w-20 h-20 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-xl"></div>
+        <div className="absolute -bottom-2 -left-2 w-16 h-16 bg-gradient-to-tr from-blue-500/20 to-transparent rounded-full blur-xl"></div>
       </div>
-    </section>
+    </div>
   );
 };
 
