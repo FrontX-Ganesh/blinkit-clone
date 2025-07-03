@@ -133,15 +133,6 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="text-right">
-            <button
-              type="button"
-              className="text-sm text-purple-300 hover:text-purple-100 font-medium transition-colors duration-200 hover:underline"
-            >
-              Forgot password?
-            </button>
-          </div>
-
           <button
             onClick={handleSubmit}
             type="submit"
