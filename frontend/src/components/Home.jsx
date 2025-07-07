@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { products as allProducts } from "../data/product_data";
+import { useGroceryCart } from "../store";
 
 const BATCH_SIZE = 8;
 
@@ -8,6 +9,8 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const loaderRef = useRef(null);
+  const { productCart, addProductToCart } = useGroceryCart();
+  console.log(productCart);
 
   // Load initial batch
   useEffect(() => {
@@ -48,7 +51,9 @@ const Home = () => {
     return () => loader && observer.unobserve(loader);
   }, [visibleProducts, hasMore, isLoadingMore]);
 
-  const handleAddToCart = () => {}
+  const handleAddToCart = (product) => {
+    addProductToCart(product);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 py-12">
@@ -100,7 +105,10 @@ const Home = () => {
                   </div>
                 </div>
 
-                <button className="w-full mt-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg" onClick={() => handleAddToCart(product)} >
+                <button
+                  className="w-full mt-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  onClick={() => handleAddToCart(product)}
+                >
                   Add to Cart
                 </button>
               </div>
