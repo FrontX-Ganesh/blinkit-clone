@@ -9,12 +9,12 @@ const Home = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const loaderRef = useRef(null);
 
-  // Load initial batch immediately
+  // Load initial batch
   useEffect(() => {
     setVisibleProducts(allProducts.slice(0, BATCH_SIZE));
   }, []);
 
-  // Infinite scroll logic with 2s loader delay
+  // Infinite scroll logic
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -48,6 +48,8 @@ const Home = () => {
     return () => loader && observer.unobserve(loader);
   }, [visibleProducts, hasMore, isLoadingMore]);
 
+  const handleAddToCart = () => {}
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 py-12">
       {/* Header */}
@@ -66,7 +68,7 @@ const Home = () => {
           {visibleProducts.map((product) => (
             <div
               key={product.id}
-              className="group bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg border border-white/20"
+              className="group bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg border border-white/20 flex flex-col"
             >
               <div className="relative overflow-hidden">
                 <img
@@ -79,22 +81,26 @@ const Home = () => {
                   ₹{product.price}
                 </div>
               </div>
-              <div className="p-6">
-                <h2 className="text-xl font-bold text-white mb-2 group-hover:text-purple-200 transition-colors">
-                  {product.name}
-                </h2>
-                <p className="text-purple-200 text-sm mb-4 line-clamp-2">
-                  {product.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-purple-500/20 text-purple-200 px-2 py-1 rounded-full border border-purple-400/30">
-                    {product.manufacturer}
-                  </span>
-                  <span className="text-xs bg-indigo-500/20 text-indigo-200 px-2 py-1 rounded-full border border-indigo-400/30">
-                    {product.category}
-                  </span>
+
+              <div className="p-6 flex flex-col justify-between flex-1">
+                <div>
+                  <h2 className="text-xl font-bold text-white mb-2 group-hover:text-purple-200 transition-colors">
+                    {product.name}
+                  </h2>
+                  <p className="text-purple-200 text-sm mb-4 line-clamp-2">
+                    {product.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <span className="text-xs bg-purple-500/20 text-purple-200 px-2 py-1 rounded-full border border-purple-400/30">
+                      {product.manufacturer}
+                    </span>
+                    <span className="text-xs bg-indigo-500/20 text-indigo-200 px-2 py-1 rounded-full border border-indigo-400/30">
+                      {product.category}
+                    </span>
+                  </div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg">
+
+                <button className="w-full mt-auto bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 px-4 rounded-lg font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105 shadow-lg" onClick={() => handleAddToCart(product)} >
                   Add to Cart
                 </button>
               </div>
